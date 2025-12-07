@@ -1,226 +1,607 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Street Café – Full Menu</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Poppins',sans-serif;background:#fff; transition:0.4s;}
-body.dark{ background:#111; color:white; }
-body.dark header{ background:rgba(0,0,0,0.4); }
-body.dark .card, body.dark .menu-box, body.dark .cart-box{ background:#1a1a1a; color:white; }
-body.dark h2{ color:#FFA500; }
-body.dark .add-btn{ background:#444; }
-body.dark .cart-icon{ background:#444; }
-
-#darkToggle{position:fixed; bottom:95px; right:20px; background:#000; color:white; padding:10px 15px; border-radius:25px; cursor:pointer; z-index:999; font-size:14px;}
-.cart-icon{ position:fixed; top:20px; right:20px; background:#FFA500;color:white;font-size:14px; padding:8px 15px;border-radius:20px; cursor:pointer; z-index:1000; }
-
-header{ text-align:center; padding:35px 20px; background:#FFD580; }
-nav{ background:#FFA500; padding:15px;text-align:center; position:sticky; top:0; z-index:10; }
-nav a{ text-decoration:none;color:white; margin:0 15px;font-size:16px;font-weight:600; transition:.3s; }
-nav a:hover{opacity:.8}
-
-h2{text-align:center;font-size:28px;color:#FFA500;margin:20px 0;}
-.menu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;padding:20px; }
-.card{ background:white; border-radius:15px; overflow:hidden; box-shadow:0 8px 20px #0002; text-align:center; transition:.3s; }
-.card:hover{transform:translateY(-5px) scale(1.02);}
-.card img{width:100%;height:180px; object-fit:cover;}
-.add-btn{ background:#FFA500;color:white; padding:7px 15px;border-radius:20px; cursor:pointer;border:none;margin:10px 0; transition:.3s;font-weight:600;font-size:12px;}
-.add-btn:hover{background:#ffb733}
-
-.fullmenu-grid{ display:grid; gap:20px; padding:20px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); }
-.menu-box{ background:white; padding:15px; border-radius:12px; box-shadow:0 5px 15px #0002; }
-
-.cart-box{ position:fixed; top:60px; right:20px; width:300px; background:white; padding:15px; border-radius:15px; display:none; z-index:1000; box-shadow:0 5px 25px #0003; transition:0.3s;}
-.cart-box h3{text-align:center; margin-bottom:10px;}
-.cart-items{ max-height:250px; overflow-y:auto; margin-bottom:10px;}
-.cart-items div{ margin-bottom:8px; font-size:14px; }
-.cart-total{ font-weight:700; text-align:center; margin-top:10px; }
-.remove-btn{ color:red; font-size:12px; margin-left:10px; cursor:pointer; }
-
-@media(max-width:768px){
-    .menu-grid, .fullmenu-grid{ grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; padding:15px;}
-    .card img{height:150px;}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Street Café – Pachore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #fff 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            animation: slideDown 1s ease-out;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        nav {
+            background: linear-gradient(90deg, #2196F3, #64B5F6);
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav a:hover {
+            color: #e3f2fd;
+            transform: translateY(-3px);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: #e3f2fd;
+            transition: all 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            animation: slideShow 15s infinite;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+        .slide:nth-child(2) { animation-delay: 5s; }
+        .slide:nth-child(3) { animation-delay: 10s; }
+        @keyframes slideShow {
+            0% { opacity: 0; transform: scale(1.1) rotate(1deg); }
+            10% { opacity: 1; transform: scale(1) rotate(0deg); }
+            30% { opacity: 1; transform: scale(1) rotate(0deg); }
+            40% { opacity: 0; transform: scale(1.1) rotate(-1deg); }
+            100% { opacity: 0; transform: scale(1.1) rotate(-1deg); }
+        }
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 32px;
+            color: #2196F3;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02) rotate(1deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .card:hover img {
+            transform: scale(1.1) rotate(-1deg);
+        }
+        .card h3 {
+            margin: 15px 0 10px;
+            font-size: 22px;
+            color: #2196F3;
+        }
+        .card p {
+            padding: 0 15px 20px;
+            color: #666;
+        }
+        .add-btn {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .add-btn:hover {
+            background: linear-gradient(45deg, #1eb150, #0f6b5a);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+        .cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+        .cart-box {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 350px;
+            max-height: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 999;
+            overflow-y: auto;
+        }
+        .cart-box h3 {
+            color: #2196F3;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .cart-items div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .remove-btn {
+            color: #ff4444;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .cart-total {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2196F3;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .whatsapp {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            color: white;
+            padding: 18px 30px;
+            font-size: 20px;
+            display: inline-block;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+            50% { box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5); }
+            100% { box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        }
+        .whatsapp:hover {
+            background: linear-gradient(45deg, #1eb150, #0f6b5a);
+            transform: translateY(-3px) scale(1.05);
+        }
+        .fullmenu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .menu-box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+        .menu-box:hover {
+            transform: translateY(-5px) rotate(0.5deg);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        .menu-box strong {
+            color: #2196F3;
+            font-size: 22px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        .menu-price {
+            font-weight: 600;
+            color: #2196F3;
+            margin-right: 10px;
+        }
+        footer {
+            background: linear-gradient(90deg, #333, #555);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .menu-grid, .fullmenu-grid {
+                grid-template-columns: 1fr;
+            }
+            nav a {
+                margin: 0 10px;
+                font-size: 16px;
+            }
+            h2 {
+                font-size: 28px;
+            }
+            .cart-box {
+                width: 90vw;
+                right: 5vw;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="cart-icon" onclick="toggleCart()">
+        🛒 <span id="cartCount">0</span>
+    </div>
+    
+    <div class="cart-box" id="cartBox">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <div class="cart-total">Total: ₹<span id="cartTotal">0</span></div>
+        <a id="orderButton" class="whatsapp" style="display:none; margin:10px 0;">📲 Order on WhatsApp</a>
+    </div>
 
-<div id="darkToggle" onclick="toggleDark()">🌙 Dark Mode</div>
-<div class="cart-icon" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+    <header>
+        <h1>The Street Café</h1>
+        <p>Fresh • Delicious • Refreshing</p>
+    </header>
+    
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Popular Items</a>
+        <a href="#fullmenu">Full Menu</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    
+    <section class="hero" id="home">
+        <img src="coldcoffee.jpg" class="slide" alt="Cold Coffee">
+        <img src="pinkshake.jpg" class="slide" alt="Pink Shake">
+        <img src="Oreoshak.jpg" class="slide" alt="Oreo Shake">
+    </section>
+    
+    <section id="menu">
+        <h2>✨ Popular Items</h2>
+        <div class="menu-grid">
+            <div class="card">
+                <img src="pinkshake.jpg" alt="Pink Shake">
+                <h3>Special Pink Shake</h3>
+                <p>Sweet, creamy & topped with soft cake chunks. ₹120</p>
+                <button class="add-btn" onclick="addToCart('Special Pink Shake', 120)">Add to Cart</button>
+            </div>
+            <div class="card">
+                <img src="coldcoffee.jpg" alt="Cold Coffee">
+                <h3>Classic Cold Coffee</h3>
+                <p>Rich taste with chocolate drizzle. ₹70</p>
+                <button class="add-btn" onclick="addToCart('Cold Coffee', 70)">Add to Cart</button>
+            </div>
+            <div class="card">
+                <img src="Oreoshak.jpg" alt="Oreo Shake">
+                <h3>Oreo Shake</h3>
+                <p>Creamy, thick & topped with soft cake bites. ₹100</p>
+                <button class="add-btn" onclick="addToCart('Oreo Shake', 100)">Add to Cart</button>
+            </div>
+            <div class="card">
+                <img src="vegloadedsandwizz.jpg" alt="Sandwich">
+                <h3>Premium Sandwizza</h3>
+                <p>Strong flavour with chocolate drizzle. ₹100</p>
+                <button class="add-btn" onclick="addToCart('Premium Sandwizza', 100)">Add to Cart</button>
+            </div>
+            <div class="card">
+                <img src="pasta.jpg" alt="Pasta">
+                <h3>Cheesy White Sauce Pasta</h3>
+                <p>Loaded with olives, veggies & extra cheese. ₹150</p>
+                <button class="add-btn" onclick="addToCart('Cheesy White Sauce Pasta', 150)">Add to Cart</button>
+            </div>
+            <div class="card">
+                <img src="watermelon.mojito.jpg" alt="Watermelon Mojito">
+                <h3>Watermelon Mojito</h3>
+                <p>Refreshing blend of watermelon, mint & ice. ₹100</p>
+                <button class="add-btn" onclick="addToCart('Watermelon Mojito', 100)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="fullmenu">
+        <h2>📋 Full Menu</h2>
+        <div class="fullmenu-grid">
+            <div class="menu-box">
+                <strong>🥪 Sandwich</strong>
+                <div class="menu-item">Masala Sandwich <span class="menu-price">₹70</span><button class="add-btn" onclick="addToCart('Masala Sandwich', 70)">+</button></div>
+                <div class="menu-item">Veg Sandwich <span class="menu-price">₹80</span><button class="add-btn" onclick="addToCart('Veg Sandwich', 80)">+</button></div>
+                <div class="menu-item">Cheese Chutney <span class="menu-price">₹80</span><button class="add-btn" onclick="addToCart('Cheese Chutney', 80)">+</button></div>
+                <div class="menu-item">Paneer Tandoori <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Paneer Tandoori', 90)">+</button></div>
+                <div class="menu-item">Cheese & Corn <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Cheese & Corn', 100)">+</button></div>
+                <div class="menu-item">Bahubali (3 Layers) <span class="menu-price">₹130</span><button class="add-btn" onclick="addToCart('Bahubali Sandwich', 130)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🥤 Shakes</strong>
+                <div class="menu-item">Vanilla Shake <span class="menu-price">₹80</span><button class="add-btn" onclick="addToCart('Vanilla Shake', 80)">+</button></div>
+                <div class="menu-item">Chocolate Shake <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Chocolate Shake', 90)">+</button></div>
+                <div class="menu-item">Strawberry Shake <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Strawberry Shake', 90)">+</button></div>
+                <div class="menu-item">Mango Shake <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Mango Shake', 90)">+</button></div>
+                <div class="menu-item">Rose Rabri Shake <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Rose Rabri Shake', 90)">+</button></div>
+                <div class="menu-item">Matka Kulfi Shake <span class="menu-price">₹110</span><button class="add-btn" onclick="addToCart('Matka Kulfi Shake', 110)">+</button></div>
+                <div class="menu-item">Kit Kat Shake <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Kit Kat Shake', 100)">+</button></div>
+                <div class="menu-item">Choco Oreo Shake <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Choco Oreo Shake', 100)">+</button></div>
+                <div class="menu-item">Rasmalai Shake <span class="menu-price">₹110</span><button class="add-btn" onclick="addToCart('Rasmalai Shake', 110)">+</button></div>
+                <div class="menu-item">Paan Fresh Shake <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Paan Fresh Shake', 100)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🍝 Maggi</strong>
+                <div class="menu-item">Masala Maggi <span class="menu-price">₹50</span><button class="add-btn" onclick="addToCart('Masala Maggi', 50)">+</button></div>
+                <div class="menu-item">Veg Masala Maggi <span class="menu-price">₹70</span><button class="add-btn" onclick="addToCart('Veg Masala Maggi', 70)">+</button></div>
+                <div class="menu-item">Cheese Maggi <span class="menu-price">₹80</span><button class="add-btn" onclick="addToCart('Cheese Maggi', 80)">+</button></div>
+                <div class="menu-item">Peri Peri Maggi <span class="menu-price">₹80</span><button class="add-btn" onclick="addToCart('Peri Peri Maggi', 80)">+</button></div>
+                <div class="menu-item">Tandoori Masala Maggi <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Tandoori Masala Maggi', 90)">+</button></div>
+                <div class="menu-item">Corn & Cheese Maggi <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Corn & Cheese Maggi', 100)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🍟 Fries</strong>
+                <div class="menu-item">Regular Fries <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Regular Fries', 90)">+</button></div>
+                <div class="menu-item">Peri Peri Fries <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Peri Peri Fries', 100)">+</button></div>
+                <div class="menu-item">Cheese Fries <span class="menu-price">₹130</span><button class="add-btn" onclick="addToCart('Cheese Fries', 130)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>⭐ TSC Specials</strong>
+                <div class="menu-item">Potato Wedges <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Potato Wedges', 100)">+</button></div>
+                <div class="menu-item">Peri Peri Wedges <span class="menu-price">₹110</span><button class="add-btn" onclick="addToCart('Peri Peri Wedges', 110)">+</button></div>
+                <div class="menu-item">Cheesy Wedges <span class="menu-price">₹140</span><button class="add-btn" onclick="addToCart('Cheesy Wedges', 140)">+</button></div>
+                <div class="menu-item">Chat Basket <span class="menu-price">₹85</span><button class="add-btn" onclick="addToCart('Chat Basket', 85)">+</button></div>
+                <div class="menu-item">Spring Roll <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Spring Roll', 100)">+</button></div>
+                <div class="menu-item">Indori Samosa <span class="menu-price">₹30</span><button class="add-btn" onclick="addToCart('Indori Samosa', 30)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🍕 Pizza</strong>
+                <div class="menu-item">Margareta Pizza <span class="menu-price">₹99</span><button class="add-btn" onclick="addToCart('Margareta Pizza', 99)">+</button></div>
+                <div class="menu-item">Onion Tomato Cap Pizza <span class="menu-price">₹140</span><button class="add-btn" onclick="addToCart('Onion Tomato Cap Pizza', 140)">+</button></div>
+                <div class="menu-item">Golden Corn Pizza <span class="menu-price">₹140</span><button class="add-btn" onclick="addToCart('Golden Corn Pizza', 140)">+</button></div>
+                <div class="menu-item">Tandoori Paneer Pizza <span class="menu-price">₹150</span><button class="add-btn" onclick="addToCart('Tandoori Paneer Pizza', 150)">+</button></div>
+                <div class="menu-item">Corn & Paneer Pizza <span class="menu-price">₹160</span><button class="add-btn" onclick="addToCart('Corn & Paneer Pizza', 160)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🍔 Burger</strong>
+                <div class="menu-item">Aloo Tikki Burger <span class="menu-price">₹60</span><button class="add-btn" onclick="addToCart('Aloo Tikki Burger', 60)">+</button></div>
+                <div class="menu-item">Veg Burger <span class="menu-price">₹80</span><button class="add-btn" onclick="addToCart('Veg Burger', 80)">+</button></div>
+                <div class="menu-item">Veg Cheese Burger <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Veg Cheese Burger', 90)">+</button></div>
+                <div class="menu-item">Veg Tandoori Burger <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Veg Tandoori Burger', 90)">+</button></div>
+                <div class="menu-item">Tandoori Paneer Burger <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Tandoori Paneer Burger', 100)">+</button></div>
+                <div class="menu-item">Double Decker Burger <span class="menu-price">₹140</span><button class="add-btn" onclick="addToCart('Double Decker Burger', 140)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🥙 Sandwizza</strong>
+                <div class="menu-item">Veg Loaded Sandwizza <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Veg Loaded Sandwizza', 100)">+</button></div>
+                <div class="menu-item">Golden Corn Sandwizza <span class="menu-price">₹110</span><button class="add-btn" onclick="addToCart('Golden Corn Sandwizza', 110)">+</button></div>
+                <div class="menu-item">Onion Tomato Cap Sandwizza <span class="menu-price">₹120</span><button class="add-btn" onclick="addToCart('Onion Tomato Cap Sandwizza', 120)">+</button></div>
+                <div class="menu-item">Tandoori Paneer Sandwizza <span class="menu-price">₹120</span><button class="add-btn" onclick="addToCart('Tandoori Paneer Sandwizza', 120)">+</button></div>
+                <div class="menu-item">Paneer Cap Onion Sandwizza <span class="menu-price">₹110</span><button class="add-btn" onclick="addToCart('Paneer Cap Onion Sandwizza', 110)">+</button></div>
+                <div class="menu-item">Paneer Corn & Cheese Sandwizza <span class="menu-price">₹140</span><button class="add-btn" onclick="addToCart('Paneer Corn & Cheese Sandwizza', 140)">+</button></div>
+                <div class="menu-item">Cheese Overloaded Sandwizza <span class="menu-price">₹150</span><button class="add-btn" onclick="addToCart('Cheese Overloaded Sandwizza', 150)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🍹 Mojito</strong>
+                <div class="menu-item">Virgin Wave Mojito <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Virgin Wave Mojito', 90)">+</button></div>
+                <div class="menu-item">Cool Cucumber Mojito <span class="menu-price">₹90</span><button class="add-btn" onclick="addToCart('Cool Cucumber Mojito', 90)">+</button></div>
+                <div class="menu-item">Watermelon Mojito <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Watermelon Mojito', 100)">+</button></div>
+                <div class="menu-item">Blue Lagoon Mojito <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Blue Lagoon Mojito', 100)">+</button></div>
+                <div class="menu-item">Green Apple Mojito <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Green Apple Mojito', 100)">+</button></div>
+                <div class="menu-item">Mango Mint Mojito <span class="menu-price">₹110</span><button class="add-btn" onclick="addToCart('Mango Mint Mojito', 110)">+</button></div>
+                <div class="menu-item">Chilli Mint Mojito <span class="menu-price">₹100</span><button class="add-btn" onclick="addToCart('Chilli Mint Mojito', 100)">+</button></div>
+                <div class="menu-item">Blue Magic Mojito <span class="menu-price">₹149</span><button class="add-btn" onclick="addToCart('Blue Magic Mojito', 149)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🍸 Coolers</strong>
+                <div class="menu-item">Masala Lemonade <span class="menu-price">₹60</span><button class="add-btn" onclick="addToCart('Masala Lemonade', 60)">+</button></div>
+                <div class="menu-item">AAM Panna <span class="menu-price">₹60</span><button class="add-btn" onclick="addToCart('AAM Panna', 60)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🌮 Vada Pav</strong>
+                <div class="menu-item">Bombay Vada Pav <span class="menu-price">₹50</span><button class="add-btn" onclick="addToCart('Bombay Vada Pav', 50)">+</button></div>
+                <div class="menu-item">Cheese Vada Pav <span class="menu-price">₹70</span><button class="add-btn" onclick="addToCart('Cheese Vada Pav', 70)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>☕ Coffee</strong>
+                <div class="menu-item">Hot Coffee (Small) <span class="menu-price">₹20</span><button class="add-btn" onclick="addToCart('Hot Coffee (Small)', 20)">+</button></div>
+                <div class="menu-item">Cappuccino <span class="menu-price">₹40</span><button class="add-btn" onclick="addToCart('Cappuccino', 40)">+</button></div>
+                <div class="menu-item">Hot Chocolate Coffee <span class="menu-price">₹40</span><button class="add-btn" onclick="addToCart('Hot Chocolate Coffee', 40)">+</button></div>
+                <div class="menu-item">Black Coffee <span class="menu-price">₹40</span><button class="add-btn" onclick="addToCart('Black Coffee', 40)">+</button></div>
+                <div class="menu-item">Cold Coffee <span class="menu-price">₹70</span><button class="add-btn" onclick="addToCart('Cold Coffee', 70)">+</button></div>
+            </div>
+            
+            <div class="menu-box">
+                <strong>🥟 MOMOS</strong>
+                <div class="menu-item">Veg Momos (Steam/Fry/Kurkure) <span class="menu-price">₹80/90/110</span>
+                    <button class="add-btn" onclick="addToCart('Veg Momos Steam', 80)">S</button>
+                    <button class="add-btn" onclick="addToCart('Veg Momos Fry', 90)">F</button>
+                    <button class="add-btn" onclick="addToCart('Veg Momos Kurkure', 110)">K</button>
+                </div>
+                <div class="menu-item">Paneer Momos (Steam/Fry/Kurkure) <span class="menu-price">₹90/100/120</span>
+                    <button class="add-btn" onclick="addToCart('Paneer Momos Steam', 90)">S</button>
+                    <button class="add-btn" onclick="addToCart('Paneer Momos Fry', 100)">F</button>
+                    <button class="add-btn" onclick="addToCart('Paneer Momos Kurkure', 120)">K</button>
+                </div>
+                <div class="menu-item">Cheese & Corn Momos (Steam/Fry/Kurkure) <span class="menu-price">₹100/110/140</span>
+                    <button class="add-btn" onclick="addToCart('Cheese & Corn Momos Steam', 100)">S</button>
+                    <button class="add-btn" onclick="addToCart('Cheese & Corn Momos Fry', 110)">F</button>
+                    <button class="add-btn" onclick="addToCart('Cheese & Corn Momos Kurkure', 140)">K</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact">
+        <h2>📍 Contact Us</h2>
+        <p style="text-align:center; font-size:18px; margin:20px 0;"><strong>Address:</strong> Shop No. 6, Shri Ram Complex A, B Road, near Utsav Vatika, Pachore, MP</p>
+        <p style="text-align:center; font-size:18px; margin:20px 0;"><strong>Phone:</strong> <a href="tel:6269045234" style="color:#2196F3;">6269045234</a></p>
+        <div style="text-align:center;">
+            <a class="whatsapp" href="https://wa.me/919999597107?text=Hi%20I%20want%20to%20order%20from%20The%20Street%20Cafe%20Pachore">📲 Quick Chat</a>
+        </div>
+    </section>
+    
+    <footer>
+        © 2025 The Street Café Pachore | Designed with ❤️ by AJ
+    </footer>
 
-<div class="cart-box" id="cartBox">
-    <h3>Your Cart</h3>
-    <div class="cart-items" id="cartItems"></div>
-    <div class="cart-total">Total: ₹<span id="cartTotal">0</span></div>
-    <a id="orderButton" target="_blank" class="add-btn" style="width:100%;display:block;text-align:center;margin-top:10px;">
-       Order on WhatsApp
-    </a>
-</div>
+    <script>
+        let cart = [];
 
-<header>
-    <h1>The Street Café</h1>
-    <p>Fresh • Delicious • Happy Place to Eat</p>
-</header>
+        function addToCart(name, price) {
+            cart.push({name: name, price: price});
+            updateCart();
+        }
 
-<nav>
-    <a href="#menu">Menu</a>
-    <a href="#fullmenu">Full Menu</a>
-    <a href="#contact">Contact</a>
-</nav>
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
 
-<section id="menu">
-<h2>✨ Popular Items</h2>
-<div class="menu-grid">
-    <div class="card"><img src="pinkshake.jpg"><h3>Special Pink Shake – ₹120</h3><button class="add-btn" onclick="addToCart('Special Pink Shake',120)">Add</button></div>
-    <div class="card"><img src="coldcoffee.jpg"><h3>Cold Coffee – ₹70</h3><button class="add-btn" onclick="addToCart('Cold Coffee',70)">Add</button></div>
-    <div class="card"><img src="Oreoshak.jpg"><h3>Oreo Shake – ₹100</h3><button class="add-btn" onclick="addToCart('Oreo Shake',100)">Add</button></div>
-    <div class="card"><img src="vegloadedsandwizz.jpg"><h3>Premium Sandwizza – ₹100</h3><button class="add-btn" onclick="addToCart('Premium Sandwizza',100)">Add</button></div>
-</div>
-</section>
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const orderButton = document.getElementById('orderButton');
+            
+            cartCount.textContent = cart.length;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div style="text-align:center;color:#999;padding:20px;">Your cart is empty 😊</div>';
+                cartTotal.textContent = '0';
+                orderButton.style.display = 'none';
+                return;
+            }
+            
+            let total = 0;
+            let itemsHtml = '';
+            
+            cart.forEach((item, index) => {
+                total += item.price;
+                itemsHtml += `
+                    <div>
+                        <span style="flex-grow:1;">${item.name}</span>
+                        <span style="font-weight:600;color:#2196F3;">₹${item.price}</span>
+                        <span class="remove-btn" onclick="removeFromCart(${index})">×</span>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = itemsHtml;
+            cartTotal.textContent = total;
+            orderButton.style.display = 'inline-block';
+            
+            // WhatsApp order with both numbers
+            const phone1 = '6269045234';
+            const phone2 = '919999597107';
+            const message = `Hi! Here's my order from The Street Café Pachore:\n\n` + 
+                          cart.map(item => `• ${item.name} - ₹${item.price}`).join('\n') + 
+                          `\n\nTotal: ₹${total}\n\nThanks! 😊`;
+            
+            orderButton.href = `https://wa.me/${phone1}?text=${encodeURIComponent(message)}`;
+        }
 
-<section id="fullmenu">
-<h2>📋 Full Menu</h2>
-<div class="fullmenu-grid">
+        function toggleCart() {
+            const box = document.getElementById('cartBox');
+            box.style.display = box.style.display === 'block' ? 'none' : 'block';
+        }
 
-<!-- Sandwich -->
-<div class="menu-box"><strong>🥪 Sandwich</strong><br>
-Masala Sandwich — 70 <button class="add-btn" onclick="addToCart('Masala Sandwich',70)">+</button><br>
-Veg Sandwich — 80 <button class="add-btn" onclick="addToCart('Veg Sandwich',80)">+</button><br>
-Cheese Chutney — 80 <button class="add-btn" onclick="addToCart('Cheese Chutney',80)">+</button><br>
-Paneer Tandoori — 90 <button class="add-btn" onclick="addToCart('Paneer Tandoori',90)">+</button><br>
-Cheese & Corn — 100 <button class="add-btn" onclick="addToCart('Cheese & Corn',100)">+</button><br>
-Bahubali (3 Layers) — 130 <button class="add-btn" onclick="addToCart('Bahubali Sandwich',130)">+</button><br>
-</div>
-
-<!-- Shakes -->
-<div class="menu-box"><strong>🥤 Shakes</strong><br>
-Vanilla Shake — 80 <button class="add-btn" onclick="addToCart('Vanilla Shake',80)">+</button><br>
-Chocolate Shake — 90 <button class="add-btn" onclick="addToCart('Chocolate Shake',90)">+</button><br>
-Strawberry Shake — 90 <button class="add-btn" onclick="addToCart('Strawberry Shake',90)">+</button><br>
-Mango Shake — 90 <button class="add-btn" onclick="addToCart('Mango Shake',90)">+</button><br>
-Rose Rabri Shake — 90 <button class="add-btn" onclick="addToCart('Rose Rabri Shake',90)">+</button><br>
-Matka Kulfi Shake — 110 <button class="add-btn" onclick="addToCart('Matka Kulfi Shake',110)">+</button><br>
-Kit Kat Shake — 100 <button class="add-btn" onclick="addToCart('Kit Kat Shake',100)">+</button><br>
-Choco Oreo Shake — 100 <button class="add-btn" onclick="addToCart('Choco Oreo Shake',100)">+</button><br>
-Rasmalai Shake — 110 <button class="add-btn" onclick="addToCart('Rasmalai Shake',110)">+</button><br>
-Paan Fresh — 100 <button class="add-btn" onclick="addToCart('Paan Fresh Shake',100)">+</button><br>
-</div>
-
-<!-- Maggi -->
-<div class="menu-box"><strong>🍝 Maggi</strong><br>
-Masala Maggi — 50 <button class="add-btn" onclick="addToCart('Masala Maggi',50)">+</button><br>
-Veg Masala Maggi — 70 <button class="add-btn" onclick="addToCart('Veg Masala Maggi',70)">+</button><br>
-Cheese Maggi — 80 <button class="add-btn" onclick="addToCart('Cheese Maggi',80)">+</button><br>
-Peri Peri Maggi — 80 <button class="add-btn" onclick="addToCart('Peri Peri Maggi',80)">+</button><br>
-Tandoori Masala Maggi — 90 <button class="add-btn" onclick="addToCart('Tandoori Masala Maggi',90)">+</button><br>
-Corn & Cheese Maggi — 100 <button class="add-btn" onclick="addToCart('Corn & Cheese Maggi',100)">+</button><br>
-</div>
-
-<!-- Fries -->
-<div class="menu-box"><strong>🍟 Fries</strong><br>
-Regular Fries — 90 <button class="add-btn" onclick="addToCart('Regular Fries',90)">+</button><br>
-Peri Peri Fries — 100 <button class="add-btn" onclick="addToCart('Peri Peri Fries',100)">+</button><br>
-Cheese Fries — 130 <button class="add-btn" onclick="addToCart('Cheese Fries',130)">+</button><br>
-</div>
-
-<!-- TSC Specials -->
-<div class="menu-box"><strong>⭐ TSC Specials</strong><br>
-Potato Wedges (Salted) — 100 <button class="add-btn" onclick="addToCart('Potato Wedges',100)">+</button><br>
-Peri Peri Wedges — 110 <button class="add-btn" onclick="addToCart('Peri Peri Wedges',110)">+</button><br>
-Cheesy Wedges — 140 <button class="add-btn" onclick="addToCart('Cheesy Wedges',140)">+</button><br>
-Chat Basket — 85 <button class="add-btn" onclick="addToCart('Chat Basket',85)">+</button><br>
-Spring Roll — 100 <button class="add-btn" onclick="addToCart('Spring Roll',100)">+</button><br>
-Indori Samosa — 30 <button class="add-btn" onclick="addToCart('Indori Samosa',30)">+</button><br>
-</div>
-
-<!-- Pizza -->
-<div class="menu-box"><strong>🍕 Pizza</strong><br>
-Margareta Pizza — 99 <button class="add-btn" onclick="addToCart('Margareta Pizza',99)">+</button><br>
-Onion Tomato Cap — 140 <button class="add-btn" onclick="addToCart('Onion Tomato Cap Pizza',140)">+</button><br>
-Golden Corn — 140 <button class="add-btn" onclick="addToCart('Golden Corn Pizza',140)">+</button><br>
-Tandoori Paneer — 150 <button class="add-btn" onclick="addToCart('Tandoori Paneer Pizza',150)">+</button><br>
-Corn & Paneer — 160 <button class="add-btn" onclick="addToCart('Corn & Paneer Pizza',160)">+</button><br>
-</div>
-
-<!-- Burger -->
-<div class="menu-box"><strong>🍔 Burger</strong><br>
-Aloo Tikki Burger — 60 <button class="add-btn" onclick="addToCart('Aloo Tikki Burger',60)">+</button><br>
-Veg Burger — 80 <button class="add-btn" onclick="addToCart('Veg Burger',80)">+</button><br>
-Veg Cheese — 90 <button class="add-btn" onclick="addToCart('Veg Cheese Burger',90)">+</button><br>
-Veg Tandoori — 90 <button class="add-btn" onclick="addToCart('Veg Tandoori Burger',90)">+</button><br>
-Tandoori Paneer — 100 <button class="add-btn" onclick="addToCart('Tandoori Paneer Burger',100)">+</button><br>
-Double Decker Burger — 140 <button class="add-btn" onclick="addToCart('Double Decker Burger',140)">+</button><br>
-</div>
-
-<!-- Sandwizza -->
-<div class="menu-box"><strong>🥙 Sandwizza</strong><br>
-Veg Loaded — 100 <button class="add-btn" onclick="addToCart('Veg Loaded Sandwizza',100)">+</button><br>
-Golden Corn — 110 <button class="add-btn" onclick="addToCart('Golden Corn Sandwizza',110)">+</button><br>
-Onion Tomato Cap — 120 <button class="add-btn" onclick="addToCart('Onion Tomato Cap Sandwizza',120)">+</button><br>
-Tandoori Paneer — 120 <button class="add-btn" onclick="addToCart('Tandoori Paneer Sandwizza',120)">+</button><br>
-Paneer Cap Onion — 110 <button class="add-btn" onclick="addToCart('Paneer Cap Onion Sandwizza',110)">+</button><br>
-Paneer Corn & Cheese — 140 <button class="add-btn" onclick="addToCart('Paneer Corn & Cheese Sandwizza',140)">+</button><br>
-Cheese Overloaded — 150 <button class="add-btn" onclick="addToCart('Cheese Overloaded Sandwizza',150)">+</button><br>
-</div>
-
-<!-- Mojito -->
-<div class="menu-box"><strong>🍹 Mojito</strong><br>
-Virgin Wave — 90 <button class="add-btn" onclick="addToCart('Virgin Wave Mojito',90)">+</button><br>
-Cool Cucumber — 90 <button class="add-btn" onclick="addToCart('Cool Cucumber Mojito',90)">+</button><br>
-Watermelon — 100 <button class="add-btn" onclick="addToCart('Watermelon Mojito',100)">+</button><br>
-Blue Lagoon — 100 <button class="add-btn" onclick="addToCart('Blue Lagoon Mojito',100)">+</button><br>
-Green Apple — 100 <button class="add-btn" onclick="addToCart('Green Apple Mojito',100)">+</button><br>
-Mango Mint — 110 <button class="add-btn" onclick="addToCart('Mango Mint Mojito',110)">+</button><br>
-Chilli Mint — 100 <button class="add-btn" onclick="addToCart('Chilli Mint Mojito',100)">+</button><br>
-Blue Magic — 149 <button class="add-btn" onclick="addToCart('Blue Magic Mojito',149)">+</button><br>
-</div>
-
-<!-- Coolers -->
-<div class="menu-box"><strong>🍸 Coolers</strong><br>
-Masala Lemonade — 60 <button class="add-btn" onclick="addToCart('Masala Lemonade',60)">+</button><br>
-AAM Panna — 60 <button class="add-btn" onclick="addToCart('AAM Panna',60)">+</button><br>
-</div>
-
-<!-- Vada Pav -->
-<div class="menu-box"><strong>🌮 Vada Pav</strong><br>
-Bombay Vada Pav — 50 <button class="add-btn" onclick="addToCart('Bombay Vada Pav',50)">+</button><br>
-Cheese Vada Pav — 70 <button class="add-btn" onclick="addToCart('Cheese Vada Pav',70)">+</button><br>
-</div>
-
-<!-- Coffee -->
-<div class="menu-box"><strong>☕ Coffee</strong><br>
-Hot Coffee (Small) — 20 <button class="add-btn" onclick="addToCart('Hot Coffee (Small)',20)">+</button><br>
-Cappuccino — 40 <button class="add-btn" onclick="addToCart('Cappuccino',40)">+</button><br>
-Hot Chocolate Coffee — 40 <button class="add-btn" onclick="addToCart('Hot Chocolate Coffee',40)">+</button><br>
-Black Coffee — 40 <button class="add-btn" onclick="addToCart('Black Coffee',40)">+</button><br>
-Cold Coffee — 70 <button class="add-btn" onclick="addToCart('Cold Coffee',70)">+</button><br>
-</div>
-
-<!-- Momos -->
-<div class="menu-box"><strong>🥟 MOMOS</strong><br>
-Veg (Steam / Fry / Kurkure) — 80 / 90 / 110 <button class="add-btn" onclick="addToCart('Veg Momos',80)">+</button><br>
-Paneer (Steam / Fry / Kurkure) — 90 / 100 / 120 <button class="add-btn" onclick="addToCart('Paneer Momos',90)">+</button><br>
-Cheese & Corn (Steam / Fry / Kurkure) — 100 / 110 / 140 <button class="add-btn" onclick="addToCart('Cheese & Corn Momos',100)">+</button><br>
-</div>
-
-</div>
-</section>
-
-<section id="contact">
-<h2>📍 Contact Us</h2>
-<p style="text-align:center;font-size:16px;"><strong>Phone:</strong> 6269045234</p>
-</section>
-
-<footer style="text-align:center;padding:15px;background:#FFA500;color:white;margin-top:20px;">
-© 2025 The Street Café | Designed by AJ
-</footer>
-
-<script>
-let cart=[];
-function toggleCart(){
-    const box=document.getElementById("cartBox");
-    box.style.display = box.style.display==="block" ? "none" :
+        // Close cart when clicking outside
+        document.addEventListener('click', function(event) {
+            const cartBox = document.getElementById('cartBox');
+            const cartIcon = document.querySelector('.cart-icon');
+            if (!cartBox.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartBox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
