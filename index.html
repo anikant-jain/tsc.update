@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Street Café – Yellow Theme Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- General Styling (White/Black) --- */
+        /* --- General Styling (Yellow Theme) --- */
         * {
             margin: 0;
             padding: 0;
@@ -14,21 +15,42 @@
         }
         body {
             font-family: 'Poppins', Arial, sans-serif;
-            background: linear-gradient(135deg, #fefce8 0%, #fff 100%); /* Light Cream/Yellow Base */
+            background: linear-gradient(135deg, #fefce8 0%, #fff 100%);
             color: #333;
             overflow-x: hidden;
+            line-height: 1.6;
         }
         header {
             text-align: center;
             padding: 30px 20px;
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #FFC107, #FFA000);
+        }
+        header h1 {
+            font-size: 2.8rem;
+            color: #FFA000;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #666;
         }
 
-        /* --- Yellow Theme Colors (Primary: #FFC107, Secondary: #FFA000) --- */
-        
+        /* --- Yellow Theme Colors --- */
         nav {
-            background: linear-gradient(90deg, #FFC107, #FFA000); /* Bright Yellow to Orange-Yellow */
+            background: linear-gradient(90deg, #FFC107, #FFA000);
             padding: 15px;
             text-align: center;
             position: sticky;
@@ -38,22 +60,38 @@
         }
         nav a {
             text-decoration: none;
-            color: #333; /* Dark text on yellow background */
+            color: #333;
             margin: 0 20px;
             font-size: 18px;
             font-weight: 700;
             transition: all 0.3s ease;
             position: relative;
+            padding: 8px 15px;
+            border-radius: 30px;
         }
-        nav a:hover {
-            color: white; 
+        nav a:hover, nav a.active {
+            color: white;
+            background: rgba(0,0,0,0.1);
         }
 
         h2 {
             font-size: 32px;
-            color: #FFA000; /* Orange-Yellow Heading */
+            color: #FFA000;
             margin-bottom: 20px;
             text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #FFC107;
+            border-radius: 2px;
         }
         
         /* Menu Box Strong/Category Titles */
@@ -62,31 +100,39 @@
             font-size: 22px;
             display: block;
             margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #FFECB3;
         }
 
         /* Card Highlights (Used for popular items) */
         .card h3 {
             margin: 15px 0 10px;
             font-size: 22px;
-            color: #FFA000; 
+            color: #FFA000;
         }
 
         /* --- Action Button (Add to Cart / WhatsApp) --- */
         .add-btn, .cart-icon, .whatsapp {
-            /* Changed from Green/Teal to Black/Dark Gray */
             background: linear-gradient(45deg, #333, #111);
-            color: #FFC107; /* Yellow text on dark background */
+            color: #FFC107;
             font-weight: 700;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         .add-btn:hover, .cart-icon:hover, .whatsapp:hover {
             background: linear-gradient(45deg, #111, #333);
-            color: white; 
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         /* Cart & Item Styling */
         .cart-box h3 {
             color: #FFA000;
+            margin-bottom: 15px;
+            text-align: center;
         }
         .cart-total {
             font-size: 20px;
@@ -94,9 +140,11 @@
             color: #FFA000;
             text-align: center;
             margin: 15px 0;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
         }
         
-        /* --- Existing Layout Styles (Kept) --- */
+        /* --- Existing Layout Styles --- */
         .hero {
             width: 100%;
             height: 400px;
@@ -134,6 +182,11 @@
             overflow: hidden;
             text-align: center;
             transition: all 0.4s ease;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         .card img {
             width: 100%;
@@ -147,9 +200,7 @@
         .add-btn {
             padding: 12px 25px;
             font-size: 16px;
-            border: none;
             border-radius: 25px;
-            cursor: pointer;
             margin: 10px;
             transition: all 0.3s ease;
             display: inline-block;
@@ -163,13 +214,16 @@
             cursor: pointer;
             z-index: 1000;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .cart-box {
             position: fixed;
             top: 70px;
             right: 20px;
             width: 350px;
-            max-height: 400px;
+            max-height: 80vh;
             background: white;
             padding: 20px;
             border-radius: 15px;
@@ -191,6 +245,10 @@
             cursor: pointer;
             font-weight: bold;
             margin-left: 10px;
+            transition: all 0.2s;
+        }
+        .remove-btn:hover {
+            transform: scale(1.2);
         }
         .whatsapp {
             padding: 18px 30px;
@@ -200,6 +258,10 @@
             text-decoration: none;
             margin-top: 30px;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         .fullmenu-grid {
             display: grid;
@@ -212,14 +274,19 @@
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .menu-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
         
-        /* Updated Menu Item Layout (Grouping Name, Price, and Button) */
+        /* Updated Menu Item Layout */
         .menu-item {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #f0f0f0;
             flex-wrap: wrap;
         }
@@ -233,13 +300,115 @@
             border-radius: 5px;
         }
         
+        /* Delivery Form Styles */
+        .delivery-form {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #FFECB3;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: #FFC107;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .location-btn {
+            background: linear-gradient(45deg, #FFC107, #FFA000);
+            color: #333;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .location-btn:hover {
+            background: linear-gradient(45deg, #FFA000, #FFC107);
+            transform: translateY(-2px);
+        }
+        .submit-btn {
+            background: linear-gradient(45deg, #FFC107, #FFA000);
+            color: #333;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #FFA000, #FFC107);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
         footer {
             background: linear-gradient(90deg, #555, #333);
-            color: #FFC107; /* Yellow footer text */
+            color: #FFC107;
             text-align: center;
             padding: 25px;
             margin-top: 50px;
         }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .social-links a {
+            color: #FFC107;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+        
         @media (max-width: 768px) {
             .menu-grid, .fullmenu-grid {
                 grid-template-columns: 1fr;
@@ -248,19 +417,125 @@
                 width: 90vw;
                 right: 5vw;
             }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+            nav a {
+                margin: 0 10px;
+                font-size: 16px;
+            }
         }
+        
+        /* Animation for new items */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .menu-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item:nth-child(5) { animation-delay: 0.5s; }
+        .menu-item:nth-child(6) { animation-delay: 0.6s; }
+        .menu-item:nth-child(7) { animation-delay: 0.7s; }
+        .menu-item:nth-child(8) { animation-delay: 0.8s; }
+        .menu-item:nth-child(9) { animation-delay: 0.9s; }
+        .menu-item:nth-child(10) { animation-delay: 1.0s; }
     </style>
 </head>
 <body>
     <div class="cart-icon" onclick="toggleCart()">
-        🛒 <span id="cartCount">0</span>
+        <i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span>
     </div>
     
     <div class="cart-box" id="cartBox">
-        <h3>Your Cart</h3>
+        <h3>Your Order</h3>
         <div id="cartItems"></div>
         <div class="cart-total">Total: ₹<span id="cartTotal">0</span></div>
-        <a id="orderButton" class="whatsapp" style="display:none; margin:10px auto; text-align: center;" onclick="generateWhatsAppOrder()">📲 Order on WhatsApp</a>
+        
+        <!-- Delivery Form -->
+        <div class="delivery-form">
+            <h3>Delivery Details</h3>
+            
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="delivery" name="orderType" value="delivery" checked>
+                    <label for="delivery">Delivery</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="pickup" name="orderType" value="pickup">
+                    <label for="pickup">Pickup</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerName">Full Name *</label>
+                <input type="text" id="customerName" class="form-control" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" class="form-control" placeholder="Enter your phone number">
+            </div>
+            
+            <div id="deliveryFields">
+                <div class="form-group">
+                    <label for="customerAddress">Delivery Address *</label>
+                    <textarea id="customerAddress" class="form-control" rows="3" placeholder="House number, street, area"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerPincode">Pincode</label>
+                        <input type="text" id="customerPincode" class="form-control" placeholder="Enter pincode">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerLandmark">Landmark</label>
+                        <input type="text" id="customerLandmark" class="form-control" placeholder="Nearby landmark">
+                    </div>
+                </div>
+                
+                <button class="location-btn" onclick="getCurrentLocation()">
+                    <i class="fas fa-map-marker-alt"></i> Use Current Location
+                </button>
+                
+                <div class="form-group">
+                    <label for="locationLink">Location Link</label>
+                    <input type="text" id="locationLink" class="form-control" placeholder="Google Maps link">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select id="paymentMethod" class="form-control">
+                        <option value="cash">Cash on Delivery</option>
+                        <option value="upi">UPI Payment</option>
+                        <option value="card">Card Payment</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryTime">Preferred Time</label>
+                    <input type="text" id="deliveryTime" class="form-control" placeholder="e.g., 6:30 PM">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="orderNotes">Order Notes</label>
+                <textarea id="orderNotes" class="form-control" rows="2" placeholder="Any special instructions"></textarea>
+            </div>
+            
+            <button class="submit-btn" onclick="generateWhatsAppOrder()">
+                <i class="fab fa-whatsapp"></i> Place Order via WhatsApp
+            </button>
+        </div>
     </div>
 
     <header>
@@ -269,53 +544,53 @@
     </header>
     
     <nav>
-        <a href="#home">Home</a>
+        <a href="#home" class="active">Home</a>
         <a href="#menu">Popular Items</a>
         <a href="#fullmenu">Full Menu</a>
         <a href="#contact">Contact</a>
     </nav>
     
     <section class="hero" id="home">
-        <img src="coldcoffee.jpg" class="slide active" alt="Cold Coffee">
-        <img src="pinkshake.jpg" class="slide" alt="Pink Shake">
-        <img src="Oreoshak.jpg" class="slide" alt="Oreo Shake">
+        <img src="https://images.unsplash.com/photo-1542372450-42a05bd80074?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" class="slide active" alt="Cold Coffee">
+        <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" class="slide" alt="Pink Shake">
+        <img src="https://images.unsplash.com/photo-1563986768494-4dee2763c72b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" class="slide" alt="Oreo Shake">
     </section>
     
     <section id="menu">
         <h2>✨ Popular Items</h2>
         <div class="menu-grid">
             <div class="card">
-                <img src="pinkshake.jpg" alt="Pink Shake">
+                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Pink Shake">
                 <h3>Special Pink Shake</h3>
                 <p>Sweet, creamy & topped with soft cake chunks. ₹120</p>
                 <button class="add-btn" onclick="addToCart('Special Pink Shake', 120)">Add to Cart</button>
             </div>
             <div class="card">
-                <img src="coldcoffee.jpg" alt="Cold Coffee">
+                <img src="https://images.unsplash.com/photo-1542372450-42a05bd80074?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Cold Coffee">
                 <h3>Classic Cold Coffee</h3>
                 <p>Rich taste with chocolate drizzle. ₹70</p>
                 <button class="add-btn" onclick="addToCart('Classic Cold Coffee', 70)">Add to Cart</button>
             </div>
             <div class="card">
-                <img src="Oreoshak.jpg" alt="Oreo Shake">
+                <img src="https://images.unsplash.com/photo-1563986768494-4dee2763c72b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Oreo Shake">
                 <h3>Oreo Shake</h3>
                 <p>Creamy, thick & topped with soft cake bites. ₹100</p>
                 <button class="add-btn" onclick="addToCart('Oreo Shake', 100)">Add to Cart</button>
             </div>
             <div class="card">
-                <img src="vegloadedsandwizz.jpg" alt="Sandwich">
+                <img src="https://images.unsplash.com/photo-1625944525533-473f1b3d6a7f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Sandwich">
                 <h3>Premium Sandwizza</h3>
                 <p>Strong flavour with pizaa. ₹100</p>
                 <button class="add-btn" onclick="addToCart('Premium Sandwizza', 100)">Add to Cart</button>
             </div>
             <div class="card">
-                <img src="pasta.jpg" alt="Pasta">
+                <img src="https://images.unsplash.com/photo-1608190003499-a0bb8a30e3e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Pasta">
                 <h3>Cheesy White Sauce Pasta</h3>
                 <p>Loaded with olives, veggies & extra cheese. ₹150</p>
                 <button class="add-btn" onclick="addToCart('Cheesy White Sauce Pasta', 150)">Add to Cart</button>
             </div>
             <div class="card">
-                <img src="watermelon.mojito.jpg" alt="Watermelon Mojito">
+                <img src="https://images.unsplash.com/photo-1576665380176-e6c3da44e7de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Watermelon Mojito">
                 <h3>Watermelon Mojito</h3>
                 <p>Refreshing blend of watermelon, mint & ice. ₹100</p>
                 <button class="add-btn" onclick="addToCart('Watermelon Mojito', 100)">Add to Cart</button>
@@ -465,17 +740,29 @@
     <section id="contact" style="text-align: center;">
         <h2>📍 Contact Us</h2>
         <p><strong>Phone:</strong> 09999599997</p>
-        <a class="whatsapp" href="https://wa.me/919999597107" target="_blank">💬 Chat with us on WhatsApp</a>
+        <p><strong>Address:</strong> 123 Main Street, Foodie District, City - 123456</p>
+        <a class="whatsapp" href="https://wa.me/919999597107" target="_blank">
+            <i class="fab fa-whatsapp"></i> Chat with us on WhatsApp
+        </a>
+        
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
     </section>
 
     <footer>
-        © 2025 The Street Café | Designed with AJ
+        <p>© 2025 The Street Café | Designed with ❤️ by AJ</p>
+        <p>Open Daily: 10:00 AM - 10:00 PM</p>
     </footer>
 
     <script>
         const WA_PHONE_NUMBER = "919999597107"; 
         let cart = {};
         
+        // Slideshow functionality
         let slideIndex = 0;
         const slides = document.querySelectorAll('.slide');
         function showSlides() {
@@ -487,12 +774,37 @@
         }
         showSlides();
 
+        // Navigation highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Toggle delivery fields based on order type
+            const orderTypeRadios = document.querySelectorAll('input[name="orderType"]');
+            const deliveryFields = document.getElementById('deliveryFields');
+            
+            orderTypeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'delivery') {
+                        deliveryFields.style.display = 'block';
+                    } else {
+                        deliveryFields.style.display = 'none';
+                    }
+                });
+            });
+        });
 
         function updateCartDisplay() {
             const itemsContainer = document.getElementById('cartItems');
             const totalElement = document.getElementById('cartTotal');
             const countElement = document.getElementById('cartCount');
-            const orderButton = document.getElementById('orderButton');
+            const orderButton = document.querySelector('.submit-btn');
 
             itemsContainer.innerHTML = '';
             let total = 0;
@@ -527,6 +839,25 @@
                 cart[name] = { price, qty: 1 };
             }
             updateCartDisplay();
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.textContent = `${name} added to cart!`;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#FFC107';
+            notification.style.color = '#333';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.style.fontWeight = '600';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 2000);
         }
 
         function removeFromCart(name) {
@@ -544,23 +875,113 @@
             cartBox.style.display = cartBox.style.display === 'block' ? 'none' : 'block';
         }
 
-        function generateWhatsAppOrder() {
-            let orderText = "Hi, I would like to place an order from The Street Café:\n\n";
-            let total = 0;
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const locationLink = `https://maps.google.com/?q=${lat},${lon}`;
+                    document.getElementById('locationLink').value = locationLink;
+                    
+                    // Show success message
+                    const msg = document.createElement('div');
+                    msg.textContent = 'Location captured successfully!';
+                    msg.style.color = '#4CAF50';
+                    msg.style.marginTop = '10px';
+                    msg.style.fontWeight = '600';
+                    document.querySelector('.delivery-form').appendChild(msg);
+                    
+                    setTimeout(() => {
+                        document.querySelector('.delivery-form').removeChild(msg);
+                    }, 3000);
+                }, function(error) {
+                    alert('Unable to retrieve your location. Please enter manually.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
 
+        function generateWhatsAppOrder() {
+            // Get customer details
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const orderType = document.querySelector('input[name="orderType"]:checked').value;
+            
+            // Validate required fields
+            if (!customerName || !customerPhone) {
+                alert('Please fill in your name and phone number');
+                return;
+            }
+            
+            if (orderType === 'delivery') {
+                const customerAddress = document.getElementById('customerAddress').value;
+                if (!customerAddress) {
+                    alert('Please provide your delivery address');
+                    return;
+                }
+            }
+            
+            // Build order message
+            let orderText = "Hi, I'd like to place an order from The Street Café:\n\n";
+            
+            // Cart items
+            let total = 0;
             for (const item in cart) {
                 const { price, qty } = cart[item];
                 const subtotal = price * qty;
                 total += subtotal;
-                orderText += `* ${item} x ${qty} (₹${subtotal})\n`;
+                orderText += `• ${item} × ${qty} = ₹${subtotal}\n`;
             }
-
-            orderText += `\n*Total: ₹${total}*`;
-
-            const url = `https://wa.me/${WA_PHONE_NUMBER}?text=${encodeURIComponent(orderText)}`;
-            window.open(url, "_blank");
+            
+            orderText += `\n*Total Amount: ₹${total}*\n\n`;
+            
+            // Customer details
+            orderText += `*Customer Details:*\n`;
+            orderText += `Name: ${customerName}\n`;
+            orderText += `Phone: ${customerPhone}\n`;
+            orderText += `Order Type: ${orderType.charAt(0).toUpperCase() + orderType.slice(1)}\n`;
+            
+            if (orderType === 'delivery') {
+                const customerAddress = document.getElementById('customerAddress').value;
+                const customerPincode = document.getElementById('customerPincode').value;
+                const customerLandmark = document.getElementById('customerLandmark').value;
+                const locationLink = document.getElementById('locationLink').value;
+                
+                orderText += `Address: ${customerAddress}\n`;
+                if (customerPincode) orderText += `Pincode: ${customerPincode}\n`;
+                if (customerLandmark) orderText += `Landmark: ${customerLandmark}\n`;
+                if (locationLink) orderText += `Location: ${locationLink}\n`;
+            }
+            
+            // Additional details
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const deliveryTime = document.getElementById('deliveryTime').value;
+            const orderNotes = document.getElementById('orderNotes').value;
+            
+            const paymentMethods = {
+                'cash': 'Cash on Delivery',
+                'upi': 'UPI Payment',
+                'card': 'Card Payment'
+            };
+            
+            orderText += `Payment Method: ${paymentMethods[paymentMethod]}\n`;
+            if (deliveryTime) orderText += `Preferred Time: ${deliveryTime}\n`;
+            if (orderNotes) orderText += `Notes: ${orderNotes}\n`;
+            
+            // Encode and create WhatsApp URL
+            const encodedText = encodeURIComponent(orderText);
+            const whatsappUrl = `https://wa.me/${WA_PHONE_NUMBER}?text=${encodedText}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Reset cart after successful order
+            cart = {};
+            updateCartDisplay();
         }
 
+        // Initialize cart display
         updateCartDisplay();
     </script>
 </body>
